@@ -200,6 +200,7 @@ public class StartFrame extends JFrame {
 	private void configJComboBox() {
 		eventCardConstraints.gridx = 1;
 		eventCardConstraints.gridy = 2;
+		eventCardConstraints.weighty = 0.15;
 		eventCard.add(comboBox, eventCardConstraints);
 
 	}
@@ -218,6 +219,7 @@ public class StartFrame extends JFrame {
 	private void configButtonCreateEventCard() {
 		eventCardConstraints.gridx = 0;
 		eventCardConstraints.gridy = 2;
+		eventCardConstraints.fill = GridBagConstraints.BOTH;
 		eventCard.add(ButtonCreateEventCard, eventCardConstraints);
 
 	}
