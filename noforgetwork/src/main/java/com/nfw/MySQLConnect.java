@@ -1,4 +1,5 @@
 package com.nfw;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -29,10 +30,10 @@ public class MySQLConnect {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(query);
 
-            // Process results 
+            // Process results
             while (resultSet.next()) {
                 String column1Value = resultSet.getString("column1");
-                // Other columns 
+                // Other columns
                 System.out.println("Column 1 Value: " + column1Value);
             }
         } catch (SQLException e) {

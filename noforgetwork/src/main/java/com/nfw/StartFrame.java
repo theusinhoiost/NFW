@@ -22,8 +22,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
-
-import com.mysql.cj.MysqlConnection;
 import com.toedter.calendar.JCalendar;
 
 public class StartFrame extends JFrame {
@@ -61,7 +59,7 @@ public class StartFrame extends JFrame {
 	String[] levels = { "Normal", "Urgency", "Emergency" };
 	JComboBox<String> comboBox = new JComboBox<>(levels);
 	// Database
-	String url = "jdbc:mysql://localhost:3306/mydatabase";
+	String url = "";
 	String user = "";
 	String password = "";
 	Connection connection = null;
@@ -86,21 +84,19 @@ public class StartFrame extends JFrame {
 			setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally{
+		} finally {
 			dispose();
 		}
 	}
-	private void connectWithDataBase(){
-		try {
-			connection = MySQLConnect.openConnection(url, user, password); //Connect with DB
-         	System.out.println("Connected to the database!");//Connect with DB
 
-           // MySQLConnect.executeQuery(connection, "SELECT * FROM my_table");
-			
+	private void connectWithDataBase() {
+		try {
+			connection = MySQLConnect.openConnection(url, user, password); // Connect with DB
+			System.out.println("Connected to the database!");// Connect with DB
+
 		} catch (Exception e) {
 			System.err.println("Error connecting to the database: " + e.getMessage());
-		}
-		finally{
+		} finally {
 			MySQLConnect.closeConnection(connection);
 
 		}
