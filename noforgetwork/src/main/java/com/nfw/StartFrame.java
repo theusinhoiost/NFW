@@ -8,7 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -59,10 +65,8 @@ public class StartFrame extends JFrame {
 	String[] levels = { "Normal", "Urgency", "Emergency" };
 	JComboBox<String> comboBox = new JComboBox<>(levels);
 	// Database
-	String url = "jdbc:mysql://localhost:3306";
-	String user = "root";
-	String password = "1234";
-	Connection connection = null;
+	Properties prop = new Properties();
+	InputStream input = null;
 
 	public static void main(String[] args) {
 		// Create the JFrame Object
@@ -70,7 +74,7 @@ public class StartFrame extends JFrame {
 			new StartFrame();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	public StartFrame() {
@@ -83,19 +87,34 @@ public class StartFrame extends JFrame {
 			setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	private void connectWithDataBase() {
 		try {
-			connection = MySQLConnect.openConnection(url, user, password); // Connect with DB
-			System.out.println("Connected to the database!");// Connect with DB
+			input = new FileInputStream("db.properties");
+            prop.load(input);
+			String url = prop.getProperty("db.url");
+			String user = prop.getProperty("db.user");
+			String password = prop.getProperty("db.password");
+			Connection connection = DriverManager.getConnection(url, user, password); // Connect with DB
+			System.out.println("Connected to the database!");// Connected with DB
 
-		} catch (Exception e) {
-			System.err.println("Error connecting to the database: " + e.getMessage());
-			MySQLConnect.closeConnection(connection);
+		} catch (IOException | SQLException ex) {
+			System.err.println("Error connecting to the database: " + ex.getMessage());
 		} 
+		finally
+		{
+			if (input != null) {
+				try {
+					input.close();		
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+              
+		}
 	}
+}
 
 	private void startWin() {
 		int[] bounds = fromSSH.ScreenBounds();
