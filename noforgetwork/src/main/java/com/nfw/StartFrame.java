@@ -59,9 +59,9 @@ public class StartFrame extends JFrame {
 	String[] levels = { "Normal", "Urgency", "Emergency" };
 	JComboBox<String> comboBox = new JComboBox<>(levels);
 	// Database
-	String url = "";
-	String user = "";
-	String password = "";
+	String url = "jdbc:mysql://localhost:3306";
+	String user = "root";
+	String password = "1234";
 	Connection connection = null;
 
 	public static void main(String[] args) {
@@ -70,8 +70,7 @@ public class StartFrame extends JFrame {
 			new StartFrame();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-
+		} 
 	}
 
 	public StartFrame() {
@@ -84,9 +83,7 @@ public class StartFrame extends JFrame {
 			setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			dispose();
-		}
+		} 
 	}
 
 	private void connectWithDataBase() {
@@ -96,10 +93,8 @@ public class StartFrame extends JFrame {
 
 		} catch (Exception e) {
 			System.err.println("Error connecting to the database: " + e.getMessage());
-		} finally {
 			MySQLConnect.closeConnection(connection);
-
-		}
+		} 
 	}
 
 	private void startWin() {
