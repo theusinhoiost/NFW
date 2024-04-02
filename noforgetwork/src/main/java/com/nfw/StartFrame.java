@@ -79,7 +79,6 @@ public class StartFrame extends JFrame {
 
 	public StartFrame() {
 		try {
-			this.connectWithDataBase();
 			this.startWin();
 			this.XCloseButton();
 			this.configMenuBar();
@@ -89,32 +88,6 @@ public class StartFrame extends JFrame {
 			e.printStackTrace();
 		}
 	}
-
-	private void connectWithDataBase() {
-		try {
-			input = new FileInputStream("db.properties");
-            prop.load(input);
-			String url = prop.getProperty("db.url");
-			String user = prop.getProperty("db.user");
-			String password = prop.getProperty("db.password");
-			Connection connection = DriverManager.getConnection(url, user, password); // Connect with DB
-			System.out.println("Connected to the database!");// Connected with DB
-
-		} catch (IOException | SQLException ex) {
-			System.err.println("Error connecting to the database: " + ex.getMessage());
-		} 
-		finally
-		{
-			if (input != null) {
-				try {
-					input.close();		
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-              
-		}
-	}
-}
 
 	private void startWin() {
 		int[] bounds = fromSSH.ScreenBounds();
