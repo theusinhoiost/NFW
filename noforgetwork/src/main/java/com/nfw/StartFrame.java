@@ -10,7 +10,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
 import java.util.Properties;
 
 import javax.swing.JButton;
@@ -59,7 +58,7 @@ public class StartFrame extends JFrame {
 	GridBagConstraints eventCardConstraints = new GridBagConstraints();
 	// Date selector
 	JCalendar calendar = new JCalendar();
-	// JCOmboBox
+	// JComboBox
 	String[] levels = { "Normal", "Urgency", "Emergency" };
 	JComboBox<String> comboBox = new JComboBox<>(levels);
 	// Database
@@ -188,11 +187,7 @@ public class StartFrame extends JFrame {
 	}
 
 	private void configButtonCreateEventCard() {
-		try {
-			DatabaseManager.createTableIfNotExists();
-		} catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
 
         eventCardConstraints.gridx = 0;
 		eventCardConstraints.gridy = 2;
@@ -201,6 +196,11 @@ public class StartFrame extends JFrame {
 		ButtonCreateEventCard.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				try {
+					DatabaseManager.createTableIfNotExists();
+				} catch (IOException er) {
+					throw new RuntimeException(er);
+				}
 
 			}
 		});
