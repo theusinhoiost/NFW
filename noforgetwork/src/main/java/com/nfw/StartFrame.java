@@ -8,12 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.swing.JButton;
@@ -29,6 +26,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import com.toedter.calendar.JCalendar;
+
 
 public class StartFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -190,10 +188,22 @@ public class StartFrame extends JFrame {
 	}
 
 	private void configButtonCreateEventCard() {
-		eventCardConstraints.gridx = 0;
+		try {
+			DatabaseManager.createTableIfNotExists();
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        eventCardConstraints.gridx = 0;
 		eventCardConstraints.gridy = 2;
 		eventCardConstraints.fill = GridBagConstraints.BOTH;
 		eventCard.add(ButtonCreateEventCard, eventCardConstraints);
+		ButtonCreateEventCard.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
 
 	}
 
