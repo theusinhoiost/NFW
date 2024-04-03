@@ -197,7 +197,9 @@ public class StartFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					DatabaseManager.createDBEventsIfNotExists();
 					DatabaseManager.createTableIfNotExists();
+
 				} catch (IOException er) {
 					throw new RuntimeException(er);
 				}

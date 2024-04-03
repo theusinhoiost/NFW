@@ -13,31 +13,31 @@ public class DatabaseManager {
         return props;
     }
 
-    public static void createDBEvents()throws IOException{
-        try {
-            Properties props = loadProperties();
-            String url = props.getProperty("db.url");
-            String user = props.getProperty("db.user");
-            String password = props.getProperty("db.password");
-            String databaseName = "Events";
+    public static void createDBEventsIfNotExists() throws IOException {
+        Properties props = loadProperties();
+        String url = props.getProperty("db.url");
+        String user = props.getProperty("db.user");
+        String password = props.getProperty("db.password");
+        String databaseName = "events";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
 
             String sql = "CREATE DATABASE IF NOT EXISTS " + databaseName;
 
-            try {
-                
-            } catch (Exception e) {
-               
+            try (Statement statement = conn.createStatement()) {
+
+                statement.executeUpdate(sql);
+                System.out.println("Database " + databaseName + " created successfully");
             }
-                               
-        } catch (Exception e) {
-            
+        }catch (SQLException e){
+            System.out.println("ERROR: " + e.getMessage());
         }
     }
 
     public static void createTableIfNotExists() throws IOException {
         try {
             Properties props = loadProperties();
-            String url = props.getProperty("db.url");
+            String url = props.getProperty("db.url")+ "/events" ;
             String user = props.getProperty("db.user");
             String password = props.getProperty("db.password");
 
