@@ -13,6 +13,27 @@ public class DatabaseManager {
         return props;
     }
 
+    public static void createDBEvents()throws IOException{
+        try {
+            Properties props = loadProperties();
+            String url = props.getProperty("db.url");
+            String user = props.getProperty("db.user");
+            String password = props.getProperty("db.password");
+            String databaseName = "Events";
+
+            String sql = "CREATE DATABASE IF NOT EXISTS " + databaseName;
+
+            try {
+                
+            } catch (Exception e) {
+               
+            }
+                               
+        } catch (Exception e) {
+            
+        }
+    }
+
     public static void createTableIfNotExists() throws IOException {
         try {
             Properties props = loadProperties();
