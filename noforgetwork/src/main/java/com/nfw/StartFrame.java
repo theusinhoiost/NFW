@@ -9,9 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
@@ -28,8 +25,6 @@ import com.toedter.calendar.JCalendar;
 
 
 public class StartFrame extends JFrame {
-	private static final long serialVersionUID = 1L;
-
 	// Import ScreenSizeHelper
 	ScreenSizeHelper fromSSH = new ScreenSizeHelper();
 	// Import GetDate
@@ -61,16 +56,15 @@ public class StartFrame extends JFrame {
 	// JComboBox
 	String[] levels = { "Normal", "Urgency", "Emergency" };
 	JComboBox<String> comboBox = new JComboBox<>(levels);
-	// Database
-	Properties prop = new Properties();
-	InputStream input = null;
+
 
 	public static void main(String[] args) {
 		// Create the JFrame Object
 		try {
 			new StartFrame();
+			Logging.logInfo("It's open(just information)");
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logging.logFatal("Error"+ e.getMessage());
 		}
 	}
 

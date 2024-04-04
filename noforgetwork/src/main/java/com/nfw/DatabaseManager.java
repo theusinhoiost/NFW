@@ -7,7 +7,7 @@ import java.util.Properties;
 public class DatabaseManager {
     private static Properties loadProperties() throws IOException {
         Properties props = new Properties();
-        FileInputStream file = new FileInputStream("db.properties");
+        FileInputStream file = new FileInputStream("noforgetwork/src/main/resources/db.properties");
         props.load(file);
         file.close();
         return props;

@@ -24,4 +24,4 @@ hs_err_pid*
 replay_pid*
 
 #DB properties 
-db.properties 
+noforgetwork/src/main/resources/db.properties
