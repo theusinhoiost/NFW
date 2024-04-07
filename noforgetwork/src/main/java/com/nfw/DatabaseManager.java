@@ -27,7 +27,7 @@ public class DatabaseManager {
             try (Statement statement = conn.createStatement()) {
 
                 statement.executeUpdate(sql);
-                System.out.println("Database " + databaseName + " created successfully");
+                Logging.logInfo("Database " + databaseName + " created successfully");
             }
         }catch (SQLException e){
             System.out.println("ERROR: " + e.getMessage());
@@ -50,7 +50,7 @@ public class DatabaseManager {
             try (Connection conn = DriverManager.getConnection(url, user, password);
                  PreparedStatement statement = conn.prepareStatement(sql)) {
                 statement.executeUpdate();
-                System.out.println("Table 'events' created successfully");
+                Logging.logInfo("Table 'events' created successfully");
             }
         } catch (SQLException ex) {
             System.out.println("ERROR: " + ex.getMessage());
@@ -73,7 +73,7 @@ public class DatabaseManager {
                 statement.setInt(4, priority);
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
-                    System.out.println("New data was registered successfully");
+                    Logging.logInfo("The event was added successfully");
                 }
             }
         } catch (SQLException ex) {

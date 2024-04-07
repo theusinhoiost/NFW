@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
@@ -192,14 +194,16 @@ public class StartFrame extends JFrame {
 		ButtonCreateEventCard.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				createDBandTable();
+			}
+
+			private void createDBandTable() {
 				try {
 					DatabaseManager.createDBEventsIfNotExists();
 					DatabaseManager.createTableIfNotExists();
-
 				} catch (IOException er) {
-					Logging.logError("Error"+ er.getMessage());
+					Logging.logError("Error in StartFrame"+ er.getMessage());
 				}
-
 			}
 		});
 
