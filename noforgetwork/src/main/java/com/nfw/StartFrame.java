@@ -76,7 +76,9 @@ public class StartFrame extends JFrame {
 			this.setVisible(true);
 			setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logging.logFatal("Error"+ e.getMessage());
+
+			
 		}
 	}
 
@@ -195,7 +197,7 @@ public class StartFrame extends JFrame {
 					DatabaseManager.createTableIfNotExists();
 
 				} catch (IOException er) {
-					throw new RuntimeException(er);
+					Logging.logError("Error"+ er.getMessage());
 				}
 
 			}
