@@ -11,6 +11,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
@@ -19,7 +20,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
@@ -49,9 +49,6 @@ public class StartFrame extends JFrame {
 	// Objects EventCard Card
 	JButton ButtonCreateEventCard = new JButton("Add event");
 	JTextArea txtArea1 = new JTextArea();
-	JRadioButton blueSelector = new JRadioButton("Normal");
-	JRadioButton yellowSelector = new JRadioButton("Urgency");
-	JRadioButton redSelector = new JRadioButton("Emergency");
 	GridBagConstraints eventCardConstraints = new GridBagConstraints();
 	// Date selector
 	JCalendar calendar = new JCalendar();
@@ -195,6 +192,30 @@ public class StartFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				createDBandTable();
+				getAndPutInformation();
+			}
+
+
+
+			private void getAndPutInformation() {
+				try {
+					Date selectedDate = calendar.getDate();
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(selectedDate);
+					int year = cal.get(Calendar.YEAR);
+					int month = cal.get(Calendar.MONTH) + 1;
+					int day = cal.get(Calendar.DAY_OF_MONTH);
+					String eventText = txtArea1.getText();
+					int priorityNum = comboBox.getSelectedIndex();
+					if (Objects.equals(eventText, "")){
+
+                    }else {
+
+					}
+
+				} catch (Exception er) {
+					throw new RuntimeException(er);
+				}
 			}
 
 			private void createDBandTable() {
