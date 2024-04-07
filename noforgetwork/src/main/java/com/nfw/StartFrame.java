@@ -42,10 +42,14 @@ public class StartFrame extends JFrame {
 	JMenuItem settingExitButton = new JMenuItem("Exit");
 	JMenuItem newActionButton = new JMenuItem("New event");
 	JMenuItem editButton = new JMenuItem("Edit event");
+	//Dark Theme
 	JCheckBoxMenuItem darkTheme = new JCheckBoxMenuItem("Dark Theme");
 	// Objects Principal Card
-	JTextArea Clock = new JTextArea(dateComplete);
-	GridBagConstraints clockConstraints = new GridBagConstraints();
+	JButton b1 = new JButton();
+	JButton b2 = new JButton();
+	JButton b3 = new JButton();
+
+
 	// Objects EventCard Card
 	JButton ButtonCreateEventCard = new JButton("Add event");
 	JTextArea txtArea1 = new JTextArea();
@@ -86,6 +90,9 @@ public class StartFrame extends JFrame {
 		this.setTitle("NFW");
 		this.setBounds(bounds[0], bounds[1], bounds[2], bounds[3]);
 		this.add(pc);
+		pc.add(b1);
+		pc.add(b2);
+		pc.add(b3);
 
 	}
 
