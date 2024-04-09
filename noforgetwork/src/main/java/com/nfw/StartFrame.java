@@ -29,9 +29,6 @@ import com.toedter.calendar.JCalendar;
 public class StartFrame extends JFrame {
 	// Import ScreenSizeHelper
 	ScreenSizeHelper fromSSH = new ScreenSizeHelper();
-	// Import GetDate
-	GetDate fromGD = new GetDate();
-	public String dateComplete = fromGD.GetAllDate();
 	// Create Panels
 	Panel pc = new Panel(new GridBagLayout());
 	Panel eventCard = new Panel(new GridBagLayout());
