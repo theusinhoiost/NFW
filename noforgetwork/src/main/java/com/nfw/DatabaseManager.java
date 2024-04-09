@@ -41,7 +41,7 @@ public class DatabaseManager {
             String user = props.getProperty("db.user");
             String password = props.getProperty("db.password");
 
-            String sql = "CREATE TABLE IF NOT EXISTS events (" +
+            String sql = "CREATE TABLE IF NOT EXISTS eventstable (" +
                     "id INT AUTO_INCREMENT PRIMARY KEY," +
                     "date VARCHAR(255) NOT NULL," +
                     "event VARCHAR(255) NOT NULL," +
@@ -50,7 +50,7 @@ public class DatabaseManager {
             try (Connection conn = DriverManager.getConnection(url, user, password);
                  PreparedStatement statement = conn.prepareStatement(sql)) {
                 statement.executeUpdate();
-                Logging.logInfo("Table 'events' created successfully");
+                Logging.logInfo("Table 'eventstable' created successfully");
             }
         } catch (SQLException ex) {
             System.out.println("ERROR: " + ex.getMessage());
@@ -60,17 +60,17 @@ public class DatabaseManager {
     public static void insertData(String date, String event, int priority) throws IOException {
         try {
             Properties props = loadProperties();
-            String url = props.getProperty("db.url");
+            String url = props.getProperty("db.url") + "/events";
             String user = props.getProperty("db.user");
             String password = props.getProperty("db.password");
 
-            String sql = "INSERT INTO events (date, event, priority) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO eventstable (date, event, priority) VALUES (?, ?, ?)";
 
             try (Connection conn = DriverManager.getConnection(url, user, password);
                  PreparedStatement statement = conn.prepareStatement(sql)) {
-                statement.setDate(2, Date.valueOf(date));
-                statement.setString(3, event);
-                statement.setInt(4, priority);
+                statement.setString(1,date);
+                statement.setString(2, event);
+                statement.setInt(3, priority);
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
                     Logging.logInfo("The event was added successfully");

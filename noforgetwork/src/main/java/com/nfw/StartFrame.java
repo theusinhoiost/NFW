@@ -206,18 +206,21 @@ public class StartFrame extends JFrame {
 
 			private void getAndPutInformation() {
 				try {
-					Date selectedDate = calendar.getDate();
 					Calendar cal = Calendar.getInstance();
-					cal.setTime(selectedDate);
-					int year = cal.get(Calendar.YEAR);
-					int month = cal.get(Calendar.MONTH) + 1;
-					int day = cal.get(Calendar.DAY_OF_MONTH);
+       				int year = cal.get(Calendar.YEAR);
+        			int month = cal.get(Calendar.MONTH) + 1; 
+        			int day = cal.get(Calendar.DAY_OF_MONTH);
+					String dateString = String.format("%04d-%02d-%02d", year, month, day);
 					String eventText = txtArea1.getText();
 					int priorityNum = comboBox.getSelectedIndex();
 					if (Objects.equals(eventText, "")){
-
-                    }else {
-
+						Logging.logInfo("Event is empty");
+						eventText = "You don't write the event";
+						DatabaseManager.insertData(dateString,eventText,priorityNum);
+                    }else{
+						DatabaseManager.insertData(dateString,eventText,priorityNum);
+						Logging.logInfo("It's OK (StartFrame)");
+					
 					}
 
 				} catch (Exception er) {
