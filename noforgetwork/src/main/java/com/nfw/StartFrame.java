@@ -10,7 +10,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
