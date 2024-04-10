@@ -24,6 +24,8 @@ import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import com.toedter.calendar.JCalendar;
 
+import static com.nfw.DatabaseManager.getDataAndDisplay;
+
 
 public class StartFrame extends JFrame {
 	// Import ScreenSizeHelper
@@ -41,14 +43,10 @@ public class StartFrame extends JFrame {
 	//Dark Theme
 	JCheckBoxMenuItem darkTheme = new JCheckBoxMenuItem("Dark Theme");
 	// Objects Principal Card
-	JButton b1 = new JButton();
-	JButton b2 = new JButton();
-	JButton b3 = new JButton();
-
-
+	JTextArea getTxtEvents = new JTextArea();
 	// Objects EventCard Card
 	JButton ButtonCreateEventCard = new JButton("Add event");
-	JTextArea txtArea1 = new JTextArea();
+	JTextArea giveTxtEvents = new JTextArea();
 	GridBagConstraints eventCardConstraints = new GridBagConstraints();
 	// Date selector
 	JCalendar calendar = new JCalendar();
@@ -86,10 +84,12 @@ public class StartFrame extends JFrame {
 		this.setTitle("NFW");
 		this.setBounds(bounds[0], bounds[1], bounds[2], bounds[3]);
 		this.add(pc);
-		pc.add(b1);
-		pc.add(b2);
-		pc.add(b3);
+		this.addGetTxtEvents();
+	}
 
+	private void addGetTxtEvents() {
+		getDataAndDisplay(getTxtEvents);
+		pc.add(getTxtEvents);
 	}
 
 	private void XCloseButton() { // Close with "X" - WINDOWS INTERFACE
@@ -207,7 +207,7 @@ public class StartFrame extends JFrame {
         			int month = cal.get(Calendar.MONTH) + 1; 
         			int day = cal.get(Calendar.DAY_OF_MONTH);
 					String dateString = String.format("%04d-%02d-%02d", year, month, day);
-					String eventText = txtArea1.getText();
+					String eventText = giveTxtEvents.getText();
 					int priorityNum = comboBox.getSelectedIndex();
 					if (Objects.equals(eventText, "")){
 						Logging.logInfo("Event is empty");
@@ -237,9 +237,9 @@ public class StartFrame extends JFrame {
 	}
 
 	private void configScrollPane() {
-		txtArea1.setLineWrap(true);
-		txtArea1.setWrapStyleWord(true);
-		JScrollPane scrollPane = new JScrollPane(txtArea1);
+		giveTxtEvents.setLineWrap(true);
+		giveTxtEvents.setWrapStyleWord(true);
+		JScrollPane scrollPane = new JScrollPane(giveTxtEvents);
 		eventCardConstraints.gridx = 0;
 		eventCardConstraints.gridy = 1;
 		eventCardConstraints.weightx = 1;

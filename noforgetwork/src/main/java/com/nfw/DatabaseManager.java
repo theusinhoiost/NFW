@@ -1,4 +1,5 @@
 package com.nfw;
+import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -29,15 +30,15 @@ public class DatabaseManager {
                 statement.executeUpdate(sql);
                 Logging.logInfo("Database " + databaseName + " created successfully");
             }
-        }catch (SQLException e){
-            System.out.println("ERROR: " + e.getMessage());
+        } catch (SQLException e) {
+            Logging.logError("Error creating database " + databaseName);
         }
     }
 
     public static void createTableIfNotExists() throws IOException {
         try {
             Properties props = loadProperties();
-            String url = props.getProperty("db.url")+ "/events" ;
+            String url = props.getProperty("db.url") + "/events";
             String user = props.getProperty("db.user");
             String password = props.getProperty("db.password");
 
@@ -53,7 +54,7 @@ public class DatabaseManager {
                 Logging.logInfo("Table 'eventstable' created successfully");
             }
         } catch (SQLException ex) {
-            System.out.println("ERROR: " + ex.getMessage());
+            Logging.logError("Error creating table 'eventstable'");
         }
     }
 
@@ -68,7 +69,7 @@ public class DatabaseManager {
 
             try (Connection conn = DriverManager.getConnection(url, user, password);
                  PreparedStatement statement = conn.prepareStatement(sql)) {
-                statement.setString(1,date);
+                statement.setString(1, date);
                 statement.setString(2, event);
                 statement.setInt(3, priority);
                 int rowsInserted = statement.executeUpdate();
@@ -77,7 +78,43 @@ public class DatabaseManager {
                 }
             }
         } catch (SQLException ex) {
-            System.out.println("ERROR: " + ex.getMessage());
+            Logging.logError("Error inserting data");
+        }
+    }
+
+    public static void getDataAndDisplay(JTextArea textArea) {
+        try {
+            Properties props = loadProperties();
+            String url = props.getProperty("db.url") + "/events";
+            String user = props.getProperty("db.user");
+            String password = props.getProperty("db.password");
+            String getDataQuery = "SELECT * FROM eventstable";
+
+            try (Connection conn = DriverManager.getConnection(url, user, password);
+                 Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery(getDataQuery)) {
+
+                // Clear the existing text in the JTextArea
+                textArea.setText("");
+
+                // Append data to the JTextArea
+                while (rs.next()) {
+                    //int eventId = rs.getInt("id");
+                    String eventName = rs.getString("event");
+                    String date = rs.getString("date");
+                    //int priority = rs.getInt("priority");
+
+                    // Format the data
+                    String formattedData ="Event Name: " + eventName + ", Date: " + date + "\n\n";
+
+                    // Append the formatted data to the JTextArea
+                    textArea.append(formattedData);
+                }
+            } catch (SQLException ex) {
+                Logging.logError("Error getting data");
+            }
+        } catch (IOException ex) {
+            Logging.logError("Error getting data");
         }
     }
 }
