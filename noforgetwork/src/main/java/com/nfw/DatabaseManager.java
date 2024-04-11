@@ -45,7 +45,7 @@ public class DatabaseManager {
             String sql = "CREATE TABLE IF NOT EXISTS eventstable (" +
                     "id INT AUTO_INCREMENT PRIMARY KEY," +
                     "date VARCHAR(255) NOT NULL," +
-                    "event VARCHAR(255) NOT NULL," +
+                    "event VARCHAR(500) NOT NULL," +
                     "priority INT NOT NULL)";
 
             try (Connection conn = DriverManager.getConnection(url, user, password);
@@ -81,9 +81,10 @@ public class DatabaseManager {
             Logging.logError("Error inserting data");
         }
     }
-
-    public static void getDataAndDisplay(JTextArea textArea) {
+    public static void getDataAndDisplay(JTextArea normalTxtEvents, JTextArea urgencyTxtEvents, JTextArea emergencyTxtEvents) {
         try {
+
+
             Properties props = loadProperties();
             String url = props.getProperty("db.url") + "/events";
             String user = props.getProperty("db.user");
@@ -94,21 +95,33 @@ public class DatabaseManager {
                  Statement stmt = conn.createStatement();
                  ResultSet rs = stmt.executeQuery(getDataQuery)) {
 
-                // Clear the existing text in the JTextArea
-                textArea.setText("");
+                // Clear the existing text in the JTextAreas
+                normalTxtEvents.setText("");
+                urgencyTxtEvents.setText("");
+                emergencyTxtEvents.setText("");
 
-                // Append data to the JTextArea
+                // Append data to the appropriate JTextAreas based on priority
                 while (rs.next()) {
-                    //int eventId = rs.getInt("id");
                     String eventName = rs.getString("event");
                     String date = rs.getString("date");
-                    //int priority = rs.getInt("priority");
+                    int priority = rs.getInt("priority");
 
                     // Format the data
-                    String formattedData ="Event Name: " + eventName + ", Date: " + date + "\n\n";
+                    String formattedData = "Event Name: " + eventName + ", Date: " + date + "\n\n";
 
-                    // Append the formatted data to the JTextArea
-                    textArea.append(formattedData);
+                    // Append the formatted data to the appropriate JTextArea based on priority
+                    switch (priority) {
+                        case 2:
+                            emergencyTxtEvents.append(formattedData);
+                            break;
+                        case 1:
+                            urgencyTxtEvents.append(formattedData);
+                            break;
+                        case 0:
+                            normalTxtEvents.append(formattedData);
+                            break;
+                    }
+
                 }
             } catch (SQLException ex) {
                 Logging.logError("Error getting data");
@@ -117,4 +130,6 @@ public class DatabaseManager {
             Logging.logError("Error getting data");
         }
     }
+
 }
+

@@ -1,37 +1,26 @@
 package com.nfw;
 
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Panel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.WindowConstants;
+import javax.swing.*;
+
 import com.toedter.calendar.JCalendar;
 
-import static com.nfw.DatabaseManager.getDataAndDisplay;
 
 
 public class StartFrame extends JFrame {
 	// Import ScreenSizeHelper
 	ScreenSizeHelper fromSSH = new ScreenSizeHelper();
 	// Create Panels
-	Panel pc = new Panel(new GridBagLayout());
+	Panel principalCard = new Panel(new GridBagLayout());
 	Panel eventCard = new Panel(new GridBagLayout());
 	// Create MenuBar
 	JMenuBar menubar = new JMenuBar();
@@ -43,7 +32,14 @@ public class StartFrame extends JFrame {
 	//Dark Theme
 	JCheckBoxMenuItem darkTheme = new JCheckBoxMenuItem("Dark Theme");
 	// Objects Principal Card
-	JTextArea getTxtEvents = new JTextArea();
+	JLabel normalLabel = new JLabel("Normal");
+	JLabel urgencyLabel = new JLabel("Urgency");
+	JLabel emergencyLabel = new JLabel("Emergency");
+	JTextArea normalTxtEvents = new JTextArea(20,20);
+	JTextArea urgencyTxtEvents = new JTextArea(20,20);
+	JTextArea emergencyTxtEvents = new JTextArea(20,20);
+	GridBagConstraints principalCardConstraints = new GridBagConstraints();
+	Insets margins = new Insets(5, 5, 5, 5);
 	// Objects EventCard Card
 	JButton ButtonCreateEventCard = new JButton("Add event");
 	JTextArea giveTxtEvents = new JTextArea();
@@ -83,13 +79,66 @@ public class StartFrame extends JFrame {
 		int[] bounds = fromSSH.ScreenBounds();
 		this.setTitle("NFW");
 		this.setBounds(bounds[0], bounds[1], bounds[2], bounds[3]);
-		this.add(pc);
+		this.add(principalCard);
 		this.addGetTxtEvents();
 	}
 
 	private void addGetTxtEvents() {
-		getDataAndDisplay(getTxtEvents);
-		pc.add(getTxtEvents);
+		//Normal Label
+		principalCardConstraints.gridx = 0;
+		principalCardConstraints.gridy = 0;
+		principalCardConstraints.ipadx = 50;
+		Font font = new Font("Arial", Font.BOLD, 22);
+		normalLabel.setFont(font);
+		normalLabel.setForeground(Color.GREEN);
+		principalCard.add(normalLabel,principalCardConstraints);
+		//Urgency Label
+		principalCardConstraints.gridx = 1;
+		principalCardConstraints.gridy = 0;
+		principalCardConstraints.ipadx = 50;
+		 font = new Font("Arial", Font.BOLD, 22);
+		urgencyLabel.setFont(font);
+		urgencyLabel.setForeground(Color.YELLOW);
+		principalCard.add(urgencyLabel,principalCardConstraints);
+		//Emergency Label
+		principalCardConstraints.gridx = 2;
+		principalCardConstraints.gridy = 0;
+		principalCardConstraints.ipadx = 50;
+		 font = new Font("Arial", Font.BOLD, 22);
+		emergencyLabel.setFont(font);
+		emergencyLabel.setForeground(Color.RED);
+		principalCard.add(emergencyLabel,principalCardConstraints);
+		//Normal Txt
+		normalTxtEvents.setLineWrap(true);
+		normalTxtEvents.setWrapStyleWord(true);
+		JScrollPane normalScrollPane = new JScrollPane(normalTxtEvents);
+		principalCardConstraints.gridx = 0;
+		principalCardConstraints.gridy = 1;
+		principalCardConstraints.insets = margins;
+		principalCard.add(normalScrollPane,principalCardConstraints);
+		//Urgency Txt
+		urgencyTxtEvents.setLineWrap(true);
+	urgencyTxtEvents.setWrapStyleWord(true);
+		JScrollPane urgencyScrollPane = new JScrollPane(urgencyTxtEvents);
+		principalCardConstraints.gridx = 1;
+		principalCardConstraints.gridy = 1;
+		principalCardConstraints.insets = margins;
+		principalCard.add(urgencyScrollPane,principalCardConstraints);
+		//Emergency Txt
+		emergencyTxtEvents.setLineWrap(true);
+		emergencyTxtEvents.setWrapStyleWord(true);
+		JScrollPane emergencyScrollPane = new JScrollPane(emergencyTxtEvents);
+		principalCardConstraints.gridx = 2;
+		principalCardConstraints.gridy = 1;
+		principalCardConstraints.insets = margins;
+		principalCard.add(emergencyScrollPane,principalCardConstraints);
+		DatabaseManager.getDataAndDisplay(normalTxtEvents, urgencyTxtEvents, emergencyTxtEvents);
+
+
+
+
+
+
 	}
 
 	private void XCloseButton() { // Close with "X" - WINDOWS INTERFACE
@@ -134,9 +183,9 @@ public class StartFrame extends JFrame {
 				darkThemeEnabled = !darkThemeEnabled; // Toggle dark theme
 
 				if (darkThemeEnabled) {
-					pc.setBackground(Color.GRAY);
+					principalCard.setBackground(Color.GRAY);
 				} else {
-					pc.setBackground(Color.WHITE);
+					principalCard.setBackground(Color.WHITE);
 				}
 
 				revalidate();
@@ -159,10 +208,23 @@ public class StartFrame extends JFrame {
 
 	private void configEventCard() {
 		configButtonCreateEventCard();
-		configScrollPane();
 		configJComboBox();
+		configScrollPane();
 		configCalendar();
 
+	}
+	private void configScrollPane() {
+		giveTxtEvents.setLineWrap(true);
+		giveTxtEvents.setWrapStyleWord(true);
+		JScrollPane scrollPane = new JScrollPane(giveTxtEvents);
+		eventCardConstraints.gridx = 0;
+		eventCardConstraints.gridy = 1;
+		eventCardConstraints.weightx = 1;
+		eventCardConstraints.weighty = 1;
+		eventCardConstraints.gridwidth = 2;
+		eventCardConstraints.fill = GridBagConstraints.BOTH;
+		eventCardConstraints.anchor = GridBagConstraints.NORTHWEST;
+		eventCard.add(scrollPane, eventCardConstraints);
 	}
 
 	private void configJComboBox() {
@@ -202,21 +264,20 @@ public class StartFrame extends JFrame {
 
 			private void getAndPutInformation() {
 				try {
-					Calendar cal = Calendar.getInstance();
-       				int year = cal.get(Calendar.YEAR);
-        			int month = cal.get(Calendar.MONTH) + 1; 
-        			int day = cal.get(Calendar.DAY_OF_MONTH);
-					String dateString = String.format("%04d-%02d-%02d", year, month, day);
+					Date selectedDate = calendar.getDate();
+					Calendar selectedCalendar = calendar.getCalendar();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+					String selectedDateString = dateFormat.format(selectedDate);
 					String eventText = giveTxtEvents.getText();
 					int priorityNum = comboBox.getSelectedIndex();
 					if (Objects.equals(eventText, "")){
 						Logging.logInfo("Event is empty");
 						eventText = "You don't write the event";
-						DatabaseManager.insertData(dateString,eventText,priorityNum);
+						DatabaseManager.insertData(selectedDateString,eventText,priorityNum);
                     }else{
-						DatabaseManager.insertData(dateString,eventText,priorityNum);
+						DatabaseManager.insertData(selectedDateString,eventText,priorityNum);
 						Logging.logInfo("It's OK (StartFrame)");
-					
+
 					}
 
 				} catch (Exception er) {
@@ -236,18 +297,5 @@ public class StartFrame extends JFrame {
 
 	}
 
-	private void configScrollPane() {
-		giveTxtEvents.setLineWrap(true);
-		giveTxtEvents.setWrapStyleWord(true);
-		JScrollPane scrollPane = new JScrollPane(giveTxtEvents);
-		eventCardConstraints.gridx = 0;
-		eventCardConstraints.gridy = 1;
-		eventCardConstraints.weightx = 1;
-		eventCardConstraints.weighty = 1;
-		eventCardConstraints.gridwidth = 2;
-		eventCardConstraints.fill = GridBagConstraints.BOTH;
-		eventCardConstraints.anchor = GridBagConstraints.NORTHWEST;
-		eventCard.add(scrollPane, eventCardConstraints);
-	}
 
 }
