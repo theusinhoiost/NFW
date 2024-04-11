@@ -27,5 +27,5 @@ replay_pid*
 noforgetwork/src/main/resources/db.properties
 
 #IDE's Config
-NFW.vscode
-NFW.idea
+NFW/.vscode
+NFW/.idea
