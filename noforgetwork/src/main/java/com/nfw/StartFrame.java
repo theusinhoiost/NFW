@@ -109,6 +109,7 @@ public class StartFrame extends JFrame {
 		emergencyLabel.setForeground(Color.RED);
 		principalCard.add(emergencyLabel,principalCardConstraints);
 		//Normal Txt
+		normalTxtEvents.setEditable(false);
 		normalTxtEvents.setLineWrap(true);
 		normalTxtEvents.setWrapStyleWord(true);
 		JScrollPane normalScrollPane = new JScrollPane(normalTxtEvents);
@@ -117,6 +118,7 @@ public class StartFrame extends JFrame {
 		principalCardConstraints.insets = margins;
 		principalCard.add(normalScrollPane,principalCardConstraints);
 		//Urgency Txt
+		urgencyTxtEvents.setEditable(false);
 		urgencyTxtEvents.setLineWrap(true);
 	urgencyTxtEvents.setWrapStyleWord(true);
 		JScrollPane urgencyScrollPane = new JScrollPane(urgencyTxtEvents);
@@ -125,6 +127,7 @@ public class StartFrame extends JFrame {
 		principalCardConstraints.insets = margins;
 		principalCard.add(urgencyScrollPane,principalCardConstraints);
 		//Emergency Txt
+		emergencyTxtEvents.setEditable(false);
 		emergencyTxtEvents.setLineWrap(true);
 		emergencyTxtEvents.setWrapStyleWord(true);
 		JScrollPane emergencyScrollPane = new JScrollPane(emergencyTxtEvents);
