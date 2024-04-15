@@ -36,14 +36,6 @@ public class StartFrame extends JFrame {
 	JLabel urgencyLabel = new JLabel("Urgency");
 	JLabel emergencyLabel = new JLabel("Emergency");
 	GridBagConstraints principalCardConstraints = new GridBagConstraints();
-	JTable principalCardTableNormal;
-	JTable principalCardTableUrgency;
-	JTable principalCardTableEmergency;
-	DefaultTableModel principalCardTableNormalModel;
-	DefaultTableModel principalCardTableUrgencyModel;
-	DefaultTableModel principalCardTableEmergencyModel;
-	JScrollPane jsPane;
-
 	//
 	// Objects EventCard Card
 	JButton ButtonCreateEventCard = new JButton("Add event");
