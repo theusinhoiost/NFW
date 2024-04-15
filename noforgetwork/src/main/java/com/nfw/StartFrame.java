@@ -1,16 +1,12 @@
 package com.nfw;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JCalendar;
 
@@ -19,9 +15,11 @@ import com.toedter.calendar.JCalendar;
 public class StartFrame extends JFrame {
 	// Import ScreenSizeHelper
 	ScreenSizeHelper fromSSH = new ScreenSizeHelper();
+	//
 	// Create Panels
-	Panel principalCard = new Panel(new GridBagLayout());
+	JPanel principalCard = new JPanel(new GridBagLayout());
 	Panel eventCard = new Panel(new GridBagLayout());
+	//
 	// Create MenuBar
 	JMenuBar menubar = new JMenuBar();
 	JMenu settings = new JMenu("Settings");
@@ -29,26 +27,37 @@ public class StartFrame extends JFrame {
 	JMenuItem settingExitButton = new JMenuItem("Exit");
 	JMenuItem newActionButton = new JMenuItem("New event");
 	JMenuItem editButton = new JMenuItem("Edit event");
+	//
 	//Dark Theme
 	JCheckBoxMenuItem darkTheme = new JCheckBoxMenuItem("Dark Theme");
+	//
 	// Objects Principal Card
 	JLabel normalLabel = new JLabel("Normal");
 	JLabel urgencyLabel = new JLabel("Urgency");
 	JLabel emergencyLabel = new JLabel("Emergency");
-	JTextArea normalTxtEvents = new JTextArea(20,20);
-	JTextArea urgencyTxtEvents = new JTextArea(20,20);
-	JTextArea emergencyTxtEvents = new JTextArea(20,20);
 	GridBagConstraints principalCardConstraints = new GridBagConstraints();
-	Insets margins = new Insets(5, 5, 5, 5);
+	JTable principalCardTableNormal;
+	JTable principalCardTableUrgency;
+	JTable principalCardTableEmergency;
+	DefaultTableModel principalCardTableNormalModel;
+	DefaultTableModel principalCardTableUrgencyModel;
+	DefaultTableModel principalCardTableEmergencyModel;
+	JScrollPane jsPane;
+
+	//
 	// Objects EventCard Card
 	JButton ButtonCreateEventCard = new JButton("Add event");
 	JTextArea giveTxtEvents = new JTextArea();
 	GridBagConstraints eventCardConstraints = new GridBagConstraints();
+	//
 	// Date selector
 	JCalendar calendar = new JCalendar();
+	//
 	// JComboBox
 	String[] levels = { "Normal", "Urgency", "Emergency" };
 	JComboBox<String> comboBox = new JComboBox<>(levels);
+
+
 
 
 	public static void main(String[] args) {
@@ -66,6 +75,7 @@ public class StartFrame extends JFrame {
 			this.startWin();
 			this.XCloseButton();
 			this.configMenuBar();
+			this.createTable();
 			this.setVisible(true);
 			setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		} catch (Exception e) {
@@ -74,6 +84,11 @@ public class StartFrame extends JFrame {
 			
 		}
 	}
+
+	private void createTable() {
+	}
+
+
 
 	private void startWin() {
 		int[] bounds = fromSSH.ScreenBounds();
@@ -108,40 +123,6 @@ public class StartFrame extends JFrame {
 		emergencyLabel.setFont(font);
 		emergencyLabel.setForeground(Color.RED);
 		principalCard.add(emergencyLabel,principalCardConstraints);
-		//Normal Txt
-		normalTxtEvents.setEditable(false);
-		normalTxtEvents.setLineWrap(true);
-		normalTxtEvents.setWrapStyleWord(true);
-		JScrollPane normalScrollPane = new JScrollPane(normalTxtEvents);
-		principalCardConstraints.gridx = 0;
-		principalCardConstraints.gridy = 1;
-		principalCardConstraints.insets = margins;
-		principalCard.add(normalScrollPane,principalCardConstraints);
-		//Urgency Txt
-		urgencyTxtEvents.setEditable(false);
-		urgencyTxtEvents.setLineWrap(true);
-	urgencyTxtEvents.setWrapStyleWord(true);
-		JScrollPane urgencyScrollPane = new JScrollPane(urgencyTxtEvents);
-		principalCardConstraints.gridx = 1;
-		principalCardConstraints.gridy = 1;
-		principalCardConstraints.insets = margins;
-		principalCard.add(urgencyScrollPane,principalCardConstraints);
-		//Emergency Txt
-		emergencyTxtEvents.setEditable(false);
-		emergencyTxtEvents.setLineWrap(true);
-		emergencyTxtEvents.setWrapStyleWord(true);
-		JScrollPane emergencyScrollPane = new JScrollPane(emergencyTxtEvents);
-		principalCardConstraints.gridx = 2;
-		principalCardConstraints.gridy = 1;
-		principalCardConstraints.insets = margins;
-		principalCard.add(emergencyScrollPane,principalCardConstraints);
-		DatabaseManager.getDataAndDisplay(normalTxtEvents, urgencyTxtEvents, emergencyTxtEvents);
-
-
-
-
-
-
 	}
 
 	private void XCloseButton() { // Close with "X" - WINDOWS INTERFACE
@@ -209,7 +190,7 @@ public class StartFrame extends JFrame {
 
 	}
 
-	private void configEventCard() {
+	private void configEventCard() {//ADD components to event card
 		configButtonCreateEventCard();
 		configJComboBox();
 		configScrollPane();
