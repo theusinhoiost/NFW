@@ -93,7 +93,7 @@ public class DatabaseManager {
         } catch (SQLException ex) {
             Logging.logError("Error inserting data");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Logging.logError("Can't get properties");
         }
     }
 }

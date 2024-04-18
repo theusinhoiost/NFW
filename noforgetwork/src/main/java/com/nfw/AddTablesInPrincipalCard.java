@@ -2,6 +2,7 @@ package com.nfw;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -19,7 +20,7 @@ public class AddTablesInPrincipalCard {
         try {
             Properties properties = new Properties();
             properties.load(new FileInputStream("noforgetwork/src/main/resources/db.properties"));
-            String url = properties.getProperty("db.url" + "/events");
+            String url = properties.getProperty("db.url")+ "/events";
             String username = properties.getProperty("db.user");
             String password = properties.getProperty("db.password");
             connection = DriverManager.getConnection(url, username, password);
@@ -31,7 +32,7 @@ public class AddTablesInPrincipalCard {
                 String event = resultSet.getString("event");
                 String date = resultSet.getString("date");
                 int priority = resultSet.getInt("priority");
-                String eventFormatted = event + " - " + date;
+                String eventFormatted = event;
                 if (priority == priorityValues) {
                     EventData eventData = new EventData(eventFormatted, date, false);
                     events.add(eventData);
@@ -79,6 +80,8 @@ public class AddTablesInPrincipalCard {
                 return String.class;
             }
         };
+        table.setPreferredScrollableViewportSize(new Dimension(450, 200));
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         JScrollPane scrollPane = new JScrollPane(table);
         table.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new JCheckBox()));
         return scrollPane;
