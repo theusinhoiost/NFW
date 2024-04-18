@@ -81,55 +81,7 @@ public class DatabaseManager {
             Logging.logError("Error inserting data");
         }
     }
-    public static void getDataAndDisplay(JTextArea normalTxtEvents, JTextArea urgencyTxtEvents, JTextArea emergencyTxtEvents) {
-        try {
-
-
-            Properties props = loadProperties();
-            String url = props.getProperty("db.url") + "/events";
-            String user = props.getProperty("db.user");
-            String password = props.getProperty("db.password");
-            String getDataQuery = "SELECT * FROM eventstable";
-
-            try (Connection conn = DriverManager.getConnection(url, user, password);
-                 Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(getDataQuery)) {
-
-                // Clear the existing text in the JTextAreas
-                normalTxtEvents.setText("");
-                urgencyTxtEvents.setText("");
-                emergencyTxtEvents.setText("");
-
-                // Append data to the appropriate JTextAreas based on priority
-                while (rs.next()) {
-                    String eventName = rs.getString("event");
-                    String date = rs.getString("date");
-                    int priority = rs.getInt("priority");
-
-                    // Format the data
-                    String formattedData = "Event Name: " + eventName + ", Date: " + date + "\n\n";
-
-                    // Append the formatted data to the appropriate JTextArea based on priority
-                    switch (priority) {
-                        case 2:
-                            emergencyTxtEvents.append(formattedData);
-                            break;
-                        case 1:
-                            urgencyTxtEvents.append(formattedData);
-                            break;
-                        case 0:
-                            normalTxtEvents.append(formattedData);
-                            break;
-                    }
-
-                }
-            } catch (SQLException ex) {
-                Logging.logError("Error getting data");
-            }
-        } catch (IOException ex) {
-            Logging.logError("Error getting data");
-        }
-    }
-
 }
+
+
 
