@@ -48,6 +48,9 @@ public class StartFrame extends JFrame {
 	// JComboBox
 	String[] levels = { "Normal", "Urgency", "Emergency" };
 	JComboBox<String> comboBox = new JComboBox<>(levels);
+	//
+	//Table
+	private AddTablesInPrincipalCard tableAdder;
 
 
 
@@ -78,6 +81,19 @@ public class StartFrame extends JFrame {
 	}
 
 	private void createTable() {
+		tableAdder = new AddTablesInPrincipalCard();
+		//
+		principalCardConstraints.gridx = 0;
+		principalCardConstraints.gridy = 1;
+		principalCard.add(tableAdder.AddNormalTable(), principalCardConstraints);
+		//
+		principalCardConstraints.gridx = 1;
+		principalCardConstraints.gridy = 1;
+		principalCard.add(tableAdder.AddUrgencyTable(), principalCardConstraints);
+		//
+		principalCardConstraints.gridx = 2;
+		principalCardConstraints.gridy = 1;
+		principalCard.add(tableAdder.AddEmergencyTable(),principalCardConstraints);
 	}
 
 
@@ -262,13 +278,9 @@ public class StartFrame extends JFrame {
 			}
 
 			private void createDBandTable() {
-				try {
-					DatabaseManager.createDBEventsIfNotExists();
-					DatabaseManager.createTableIfNotExists();
-				} catch (IOException er) {
-					Logging.logError("Error in StartFrame"+ er.getMessage());
-				}
-			}
+                DatabaseManager.createDBEventsIfNotExists();
+                DatabaseManager.createTableIfNotExists();
+            }
 		});
 
 	}
