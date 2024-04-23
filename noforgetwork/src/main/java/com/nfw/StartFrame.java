@@ -82,6 +82,7 @@ public class StartFrame extends JFrame {
 	private void addIcon() {
 		ImageIcon icon = new ImageIcon("noforgetwork\\src\\main\\resources\\download.jpeg");
         Image iconImage = icon.getImage();
+		this.setIconImage(iconImage);
 
 	}
 
