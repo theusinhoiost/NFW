@@ -28,8 +28,6 @@ public class StartFrame extends JFrame {
 	JMenuItem newActionButton = new JMenuItem("New event");
 	JMenuItem editButton = new JMenuItem("Edit event");
 	//
-	//Dark Theme
-	JCheckBoxMenuItem darkTheme = new JCheckBoxMenuItem("Dark Theme");
 	//
 	// Objects Principal Card
 	JLabel normalLabel = new JLabel("Normal");
@@ -148,7 +146,6 @@ public class StartFrame extends JFrame {
 		menubar.add(events);
 		events.add(editButton);
 		events.add(newActionButton);
-		settings.add(darkTheme);
 		settings.add(settingExitButton);
 
 		settingExitButton.addActionListener(new ActionListener() { // Close Win with "exit" in settings
@@ -166,23 +163,6 @@ public class StartFrame extends JFrame {
 				repaint();
 			}
 
-		});
-		darkTheme.addActionListener(new ActionListener() {
-			// Dark mode
-			boolean darkThemeEnabled = false;
-
-			public void actionPerformed(ActionEvent e) {
-				darkThemeEnabled = !darkThemeEnabled; // Toggle dark theme
-
-				if (darkThemeEnabled) {
-					principalCard.setBackground(Color.GRAY);
-				} else {
-					principalCard.setBackground(Color.WHITE);
-				}
-
-				revalidate();
-				repaint();
-			}
 		});
 	}
 
