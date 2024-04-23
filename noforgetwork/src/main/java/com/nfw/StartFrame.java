@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
+import java.net.URL;
 import com.toedter.calendar.JCalendar;
 
 
@@ -69,6 +69,7 @@ public class StartFrame extends JFrame {
 			this.XCloseButton();
 			this.configMenuBar();
 			this.createTable();
+			this.addIcon();
 			this.setVisible(true);
 			setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		} catch (Exception e) {
@@ -76,6 +77,12 @@ public class StartFrame extends JFrame {
 
 			
 		}
+	}
+
+	private void addIcon() {
+		ImageIcon icon = new ImageIcon("noforgetwork\\src\\main\\resources\\download.jpeg");
+        Image iconImage = icon.getImage();
+
 	}
 
 	private void createTable() {
