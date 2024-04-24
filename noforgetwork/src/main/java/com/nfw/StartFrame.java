@@ -10,10 +10,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Objects;
-
-
 
 public class StartFrame extends JFrame {
 	// Import ScreenSizeHelper
@@ -31,8 +27,6 @@ public class StartFrame extends JFrame {
 	JMenuItem newActionButton = new JMenuItem("New event");
 	JMenuItem editButton = new JMenuItem("Edit event");
 	//
-	//Dark Theme
-	JCheckBoxMenuItem darkTheme = new JCheckBoxMenuItem("Dark Theme");
 	//
 	// Objects Principal Card
 	JLabel normalLabel = new JLabel("Normal");
@@ -51,6 +45,9 @@ public class StartFrame extends JFrame {
 	// JComboBox
 	String[] levels = { "Normal", "Urgency", "Emergency" };
 	JComboBox<String> comboBox = new JComboBox<>(levels);
+	//
+	//Table
+	private AddTablesInPrincipalCard tableAdder;
 
 
 
@@ -71,6 +68,7 @@ public class StartFrame extends JFrame {
 			this.XCloseButton();
 			this.configMenuBar();
 			this.createTable();
+			this.addIcon();
 			this.setVisible(true);
 			setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		} catch (Exception e) {
@@ -80,7 +78,27 @@ public class StartFrame extends JFrame {
 		}
 	}
 
+	private void addIcon() {
+		ImageIcon icon = new ImageIcon("noforgetwork\\src\\main\\resources\\download.jpeg");
+        Image iconImage = icon.getImage();
+		this.setIconImage(iconImage);
+
+	}
+
 	private void createTable() {
+		tableAdder = new AddTablesInPrincipalCard();
+		//
+		principalCardConstraints.gridx = 0;
+		principalCardConstraints.gridy = 1;
+		principalCard.add(tableAdder.AddNormalTable(), principalCardConstraints);
+		//
+		principalCardConstraints.gridx = 1;
+		principalCardConstraints.gridy = 1;
+		principalCard.add(tableAdder.AddUrgencyTable(), principalCardConstraints);
+		//
+		principalCardConstraints.gridx = 2;
+		principalCardConstraints.gridy = 1;
+		principalCard.add(tableAdder.AddEmergencyTable(),principalCardConstraints);
 	}
 
 
@@ -135,7 +153,6 @@ public class StartFrame extends JFrame {
 		menubar.add(events);
 		events.add(editButton);
 		events.add(newActionButton);
-		settings.add(darkTheme);
 		settings.add(settingExitButton);
 
 		settingExitButton.addActionListener(new ActionListener() { // Close Win with "exit" in settings
@@ -153,23 +170,6 @@ public class StartFrame extends JFrame {
 				repaint();
 			}
 
-		});
-		darkTheme.addActionListener(new ActionListener() {
-			// Dark mode
-			boolean darkThemeEnabled = false;
-
-			public void actionPerformed(ActionEvent e) {
-				darkThemeEnabled = !darkThemeEnabled; // Toggle dark theme
-
-				if (darkThemeEnabled) {
-					principalCard.setBackground(Color.GRAY);
-				} else {
-					principalCard.setBackground(Color.WHITE);
-				}
-
-				revalidate();
-				repaint();
-			}
 		});
 	}
 
@@ -264,13 +264,9 @@ public class StartFrame extends JFrame {
 			}
 
 			private void createDBandTable() {
-				try {
-					DatabaseManager.createDBEventsIfNotExists();
-					DatabaseManager.createTableIfNotExists();
-				} catch (IOException er) {
-					Logging.logError("Error in StartFrame"+ er.getMessage());
-				}
-			}
+                DatabaseManager.createDBEventsIfNotExists();
+                DatabaseManager.createTableIfNotExists();
+            }
 		});
 
 	}
