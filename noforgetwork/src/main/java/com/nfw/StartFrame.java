@@ -1,16 +1,15 @@
 package com.nfw;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.net.URL;
 import com.toedter.calendar.JCalendar;
 
-
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 public class StartFrame extends JFrame {
 	// Import ScreenSizeHelper
@@ -245,7 +244,6 @@ public class StartFrame extends JFrame {
 			private void getAndPutInformation() {
 				try {
 					Date selectedDate = calendar.getDate();
-					Calendar selectedCalendar = calendar.getCalendar();
 					SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 					String selectedDateString = dateFormat.format(selectedDate);
 					String eventText = giveTxtEvents.getText();
