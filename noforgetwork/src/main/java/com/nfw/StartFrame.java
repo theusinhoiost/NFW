@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
@@ -245,7 +244,7 @@ public class StartFrame extends JFrame {
 
 			private void getAndPutInformation() {
 				try {
-					Date selectedDate = (Date) calendar.getDate();
+					Date selectedDate =  calendar.getDate();
 					SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 					String selectedDateString = dateFormat.format(selectedDate);
 					String eventText = giveTxtEvents.getText();
