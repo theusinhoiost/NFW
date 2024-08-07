@@ -1,43 +1,41 @@
-const { app, BrowserWindow, ipcMain, nativeTheme } = require('electron/main')
-const path = require('node:path')
+const path = require('path');
 
-function createWindow () {
-  const win = new BrowserWindow({
+require('electron-reload')(__dirname, {
+  electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
+  awaitWriteFinish: true,
+});
+
+// Restante do seu código principal
+const { app, BrowserWindow } = require('electron');
+
+let mainWindow;
+
+function createWindow() {
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
-    }
-  })
+      nodeIntegration: true,
+    },
+  });
 
-  win.loadFile('index.html')
+  mainWindow.loadFile('index.html');
+
+  mainWindow.on('closed', function () {
+    mainWindow = null;
+  });
 }
 
-ipcMain.handle('dark-mode:toggle', () => {
-  if (nativeTheme.shouldUseDarkColors) {
-    nativeTheme.themeSource = 'light'
-  } else {
-    nativeTheme.themeSource = 'dark'
-  }
-  return nativeTheme.shouldUseDarkColors
-})
+app.on('ready', createWindow);
 
-ipcMain.handle('dark-mode:system', () => {
-  nativeTheme.themeSource = 'system'
-})
-
-app.whenReady().then(() => {
-  createWindow()
-
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
-    }
-  })
-})
-
-app.on('window-all-closed', () => {
+app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
-})
+});
+
+app.on('activate', function () {
+  if (mainWindow === null) {
+    createWindow();
+  }
+});
