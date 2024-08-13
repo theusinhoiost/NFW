@@ -17,7 +17,7 @@
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="#">Início</a>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" aria-expanded="false" href="#" data-bs-toggle="dropdown" role="button">Eventos</a>
@@ -26,9 +26,13 @@
                       <li><a class="dropdown-item" href="#">Editar evento</a></li>
                     </ul>
                   </li>
-                  <li class="nav-item">
-                    <a href="#" class="navbar-brand"><img src="src/imgs/gear.svg" alt="Options"></a>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" aria-expanded="false" href="#" data-bs-toggle="dropdown" role="button"><img src="src/imgs/gear.svg" alt="Options"></a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#" id="toggle-dark-mode">Alterar tema (dark/white)</a></li>
+                    </ul>
                   </li>
+              
                 </ul>
             </div>
           </nav>
@@ -47,7 +51,10 @@
             </div>
           </div> 
     </main>
+    
+    
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="src/scripts/thememodifier.js"></script>
 </body>
 </html>
