@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'; object-src 'none';">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body data-bs-theme="dark">
@@ -39,8 +40,9 @@
     <label for="dataEvento" class="form-label">Data ?</label>
     <input type="date" class="form-control" id="dataEvento">
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
 </form>
       <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="src/scripts/createEvents.js"></script>
 </body>
 </html>
