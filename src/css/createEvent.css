@@ -1,0 +1,18 @@
+.eventsCreation{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    max-width: 60%;
+    gap: 20px;
+}
+
+.submitButton{
+    max-width: 240px;
+    margin: auto;
+}
+
+.addEvents{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Novo evento</title>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'; object-src 'none';">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./src/css/createEvent.css">
 </head>
 <body data-bs-theme="dark">
   <header>
@@ -30,19 +31,31 @@
           </div>
         </div>
       </nav>
-</header>
-<form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Nome do evento ?</label>
-    <textarea name="nomeDoEvento" id="nomeDoEvento" class="form-control" rows="2"></textarea>
+  </header>
+  <form class="eventsCreation">
+    <div class="mb-3 addEvents">
+      <label for="exampleInputEmail1" class="form-label teste">Nome do evento :</label>
+      <textarea name="nomeDoEvento" id="nomeDoEvento" class="form-control" rows="2"></textarea>
+      <label for="dataEvento" class="form-label">Data :</label>
+      <input type="date" class="form-control" id="dataEvento">
+      <label for="hora">Hora :</label>
+      <input type="time" class="form-control" id="hora" name="hora">
+      <div class="form-group">
+        <label for="prioridade">Prioridade :</label>
+        <select class="form-control" id="prioridade" name="prioridade">
+            <option value="normal">Normal</option>
+            <option value="urgente">Urgente</option>
+            <option value="emergencial">Emergencial</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary submitButton">Enviar</button>
+    <div class="form-group">
+      
   </div>
-  <div class="mb-3">
-    <label for="dataEvento" class="form-label">Data ?</label>
-    <input type="date" class="form-control" id="dataEvento">
-  </div>
-  <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
-</form>
+  </form>
       <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-      <script src="src/scripts/createEvents.js"></script>
 </body>
 </html>
+
+
